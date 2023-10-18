@@ -31,6 +31,8 @@ const INPUTS = [
     document.querySelector('#key'),
 ];
 
+const color = document.querySelector('.color');
+
 const RANGES = {
     red: [0, 255],
     green: [0, 255],
@@ -86,7 +88,19 @@ for (let input of INPUTS) {
     INPUTS[7].value = cmyk.m;
     INPUTS[8].value = cmyk.y;
     INPUTS[9].value = cmyk.k;
+
+    rgb.r = Math.round(rgb.r);
+    rgb.g = Math.round(rgb.g);
+    rgb.b = Math.round(rgb.b);
+
+    let str = '#' + hex(rgb.r) + hex(rgb.g) + hex(rgb.b);
+    console.log(str);
+    color.style.backgroundColor = str; 
   });
+}
+
+function hex(c) {
+  return (c.toString(16).length == 1 ? '0' + c.toString(16) : c.toString(16));
 }
 
 function RGBtoCMYK(R, G, B) {
@@ -148,10 +162,13 @@ function RGBtoHLS(r, g, b) {
       h = 60 * ((r - g) / delta + 3);
     }
   }
+  if (h < 0) {
+    h += 360;
+  }
 
   l = (max + min) / 2;
   s = delta / (1 - Math.abs(2 * l - 1));
-  if (l == 0) {
+  if (l == 0 || delta == 0) {
     s = 0;
   }
   return { h: h, l: l * 100, s: s * 100};
@@ -161,45 +178,33 @@ function RGBtoHLS(r, g, b) {
 function HLStoRGB(h, l, s) {
   l /= 100;
   s /= 100;
+  const c = x => Math.round(x * 255)
+  let q = l + s - (l * s)
+        if (l < 0.5) {
+            q = l * (1 + s)
+        }
+        const p = 2 * l - q
+        const hk = h / 360.
+        const tr = hk + 1 / 3
+        const tg = hk
+        const tb = hk - 1 / 3
 
-  let c = (1 - Math.abs(2 * l - 1)) * s;
-  let x = c * (1 - Math.abs(h / 60) % 2 - 1);
-  let m = l - c / 2;
-
-  let r, g, b;
-  if ((h >= 0 && h < 60) || h == 360) {
-    r = c;
-    g = x;
-    b = 0;
-  }
-  if (h >= 60 && h < 120) {
-    r = x;
-    g = c;
-    b = 0;
-  }
-  if (h >= 120 && h < 180) {
-    r = 0;
-    g = c;
-    b = x;
-  }
-  if (h >= 180 && h < 240) {
-    r = 0;
-    g = x;
-    b = c;
-  }
-  if (h >= 240 && h < 300) {
-    r = x;
-    g = 0;
-    b = c;
-  }
-  if (h >= 300 && h < 360) {
-    r = c;
-    g = 0;
-    b = x;
-  }
-
-  return { r: (r + m) * 255, g: (g + m) * 255, b: (b + m) * 255 };
+  return {
+    r: c(hueToRgb(p, q, tr)),
+    g: c(hueToRgb(p, q, tg)),
+    b: c(hueToRgb(p, q, tb)),
+  };
 }
+
+function hueToRgb(p, q, t) {
+  if (t < 0) t += 1
+  if (t > 1) t -= 1
+  if (t < 1.0 / 6) return p + (q - p) * 6 * t
+  if (t < 1.0 / 2) return q
+  if (t < 2.0 / 3) return p + (q - p) * (2 / 3 - t) * 6
+  return p
+}
+
 
 function init() {
     let hls = RGBtoHLS(STANDART_COLOR.r, STANDART_COLOR.g, STANDART_COLOR.b);
@@ -216,6 +221,12 @@ function init() {
     INPUTS[7].value = cmyk.m;
     INPUTS[8].value = cmyk.y;
     INPUTS[9].value = cmyk.k;
+
+    rgb.r = Math.round(rgb.r);
+    rgb.g = Math.round(rgb.g);
+    rgb.b = Math.round(rgb.b);
+
+    color.style.backgroundColor = '#' + rgb.r.toString(16) + rgb.g.toString(16) + rgb.b.toString(16); 
 }
 
 init();
@@ -224,6 +235,7 @@ for (let item of INPUTS) {
     item.addEventListener('input', (e) => {
         console.log(e.currentTarget.dataset.type);
     });
+
 }
 
 console.log(HLStoRGB(0, 9, 0));
