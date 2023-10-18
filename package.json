@@ -1,19 +1,5 @@
 {
-  "name": "kglabs",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/KrollikRoddzer/KGLabs.git"
-  },
-  "author": "KrollikRoddzer",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/KrollikRoddzer/KGLabs/issues"
-  },
-  "homepage": "https://github.com/KrollikRoddzer/KGLabs#readme"
+  "dependencies": {
+    "@jaames/iro": "^5.5.2"
+  }
 }

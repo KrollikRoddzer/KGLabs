@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color picker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+    <main>
+        <section id="color_selector">
+            <div class="color_selector">
+                <div class="wrapper">
+                    <h1 class="header_1">Color Changer</h1>
+                    <div class="color_changer_body">
+                        <div class="color_changer_body__item color_changer_body__grb">
+                            <h2 class="header_2">RGB</h2>
+                            <input type="number" id="red" class="input_color" data-type="RGB">
+                            <input type="number" id="green" class="input_color" data-type="RGB">
+                            <input type="number" id="blue" class="input_color" data-type="RGB">
+                        </div>
+                        <div class="color_changer_body__item color_changer_body__hsv">
+                            <h2 class="header_2">HLS</h2>
+                            <input type="number" id="hue" class="input_color" data-type="HLS">
+                            <input type="number" id="lightness" class="input_color" data-type="HLS">
+                            <input type="number" id="saturation" class="input_color" data-type="HLS">
+                        </div>
+                        <div class="color_changer_body__item color_changer_body__cmyk">
+                            <h2 class="header_2">CMYK</h2>
+                            <input type="number" id="cyan" class="input_color" data-type="CMYK">
+                            <input type="number" id="magenta" class="input_color" data-type="CMYK">
+                            <input type="number" id="yellow" class="input_color" data-type="CMYK">
+                            <input type="number" id="key" class="input_color" data-type="CMYK">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script type="module" src="index.js"></script>
+</body>
+</html>
